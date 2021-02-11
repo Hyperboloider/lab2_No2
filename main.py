@@ -51,7 +51,3 @@ csvs = find_csv(directory)
 team_creator(directory, csvs, teams)
 teams = sorter(teams)
 create_csv(teams)
-
-print("================================================")
-for team in teams:
-    print (team.name, team.points)
