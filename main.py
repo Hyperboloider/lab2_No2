@@ -28,11 +28,30 @@ def team_creator(directory, csvs, teams):
             for _ in range(numberOfRows):
                 teams.append(Team(table.readline()))
 
+def sorter(lst):
+    if len(lst) <= 1:
+        return lst
+    else:
+        mid = lst[len(lst)//2]
+        less = [n for n in lst if n < mid]
+        equal = [n for n in lst if n == mid]
+        bigger = [n for n in lst if n > mid]
+
+        return sorter(bigger) + equal + sorter(less)
+
+def create_csv(teams):
+    with open("result.csv", "w") as result:
+        for position in range(len(teams)):
+            result.write(f"{position + 1},{teams[position].name},{teams[position].points},{','.join(teams[position].games)}\n")
+
 directory = path_input()
 files = os.listdir(directory)
 teams = []
 csvs = find_csv(directory)
 team_creator(directory, csvs, teams)
+teams = sorter(teams)
+create_csv(teams)
 
+print("================================================")
 for team in teams:
-    print(team.name, team.points)
+    print (team.name, team.points)
